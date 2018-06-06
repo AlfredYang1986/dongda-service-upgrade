@@ -28,14 +28,12 @@ trait authEmailJsonApiOpt {
 
     implicit val authEmailJsonapiRelationReader : JsonapiRelationshipObjectReader[auth_email] = new JsonapiRelationshipObjectReader[auth_email] {
         override def fromJsonapi(ships : Relationships, included : Included) : auth_email = {
-            val auth_ship =
-                ships.get("auth_email").get.data.
-                    map(_.asInstanceOf[ResourceObject] :: Nil).
+            ships.get("auth_email").get.data.
+                map(_.asInstanceOf[ResourceObject] :: Nil).
                     getOrElse(ships.get("auth_email").get.data.
                         map(_.asInstanceOf[ResourceObjects].array.toList).
-                        getOrElse(throw new Exception("error")))
-
-            auth_ship.map { ship =>
+                        getOrElse(throw new Exception("error"))).
+            map { ship =>
                 val t = ship.`type`
                 val id = ship.id.get
 
