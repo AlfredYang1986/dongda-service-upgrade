@@ -6,7 +6,7 @@ import akka.actor.ActorRef
 import akka.actor.Props
 import akka.actor.Actor
 import model.steps.{commonresult, commonstep}
-import model.timeout.timeout
+import model.common.timeout
 import pattern.manager.SequenceSteps
 
 object PipeFilter {
