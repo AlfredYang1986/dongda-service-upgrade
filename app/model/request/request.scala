@@ -29,24 +29,9 @@ trait requestJsonApiOpt {
 
     implicit val requestJsonapiRootObjectReader : JsonapiRootObjectReader[request] = new JsonapiRootObjectReader[request] {
         override def fromJsonapi(rootObject: RootObject) : request = {
-            val tmp = rootObject.data.
-                map(_.asInstanceOf[ResourceObject] :: Nil).
-                getOrElse(rootObject.data.
-                    map(_.asInstanceOf[ResourceObjects].array.toList).
-                    getOrElse(throw new Exception("error")))
-
-            val lst =
-                tmp.map { iter =>
-                    val (major, minor) = iter.attributes.map { attr =>
-                        (attr.find("major" == _.name).map (_.value.asInstanceOf[NumberValue].value.toInt).getOrElse(0),
-                         attr.find("minor" == _.name).map (_.value.asInstanceOf[NumberValue].value.toInt).getOrElse(0))
-                    }.getOrElse(1, 1)
-
-                    import model.auth.authEmailJsonApiOpt.authEmailJsonapiRelationReader
-                    request(iter.id.get.toInt, major, minor,
-                        Some(authEmailJsonapiRelationReader.fromJsonapi(iter.relationships.get, rootObject.included.get)))
-                }
-            lst.head
+            import model.request.requestsJsonApiOpt.requestsJsonapiRootObjectReader
+            val lst = requestsJsonapiRootObjectReader.fromJsonapi(rootObject)
+            lst.reqs.head
         }
     }
 }

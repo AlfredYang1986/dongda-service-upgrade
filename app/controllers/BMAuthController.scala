@@ -22,21 +22,10 @@ class BMAuthController @Inject()
     def decodeJson[T](json: Json)(implicit d: io.circe.Decoder[T]) : T = json.as[T].right.get
 
     def login = Action(circe.json[RootObject]) { implicit request =>
-        import model.request.requestJsonApiOpt.requestJsonapiRootObjectReader._
+        import model.request.requestsJsonApiOpt.requestsJsonapiRootObjectReader._
         val tt = fromJsonapi(request.body)
         println(tt)
         println(tt.asJson)
-//        val rr = decodeJson[RootObject](tt)
-//        println(rr.getClass)
-//        println(rr)
         Ok(tt.asJson)
     }
-
-//    def post = Action(circe.json[RootObject]) { implicit request =>
-//        val tmp = request.body
-//        println(request.body)
-//        val tt = opt.userJsonapiRootObjectReader.fromJsonapi(tmp)
-//        println(tt)
-//        Ok(request.body.asJson)
-//    }
 }
