@@ -1,20 +1,20 @@
 package services.AuthService
 
 import javax.inject.Singleton
-import model.user.user
+import model.steps.{commonerror, commonresult, commonstep}
+import model.user.{user, userdetailresult}
 import services.Service
 
 trait AuthService extends Service[user]
 
-@Singleton
-class AuthServiceImpl extends AuthService {
-    override def push(p: user): Option[String] = None
+//@Singleton
+//class AuthServiceImpl extends AuthService with commonstep {
 
-    override def pop(u: user): Option[String] = None
+case class testStep(override val args : commonresult) extends commonstep {
+    override val module: String = "test"
+    override val methed: String = "test"
 
-    override def update(c: user, u: user): Option[String] = None
-
-    override def query(c: user): Option[String] = None
-
-    override def queryMulti(c: user): Option[String] = None
+    override def processes(pr: Option[commonresult]): (Option[commonresult], Option[commonerror]) = {
+        (Some(userdetailresult("12345", 1, 1, Some(user("1234", "alfred", "13720200856", Nil)))), None)
+    }
 }

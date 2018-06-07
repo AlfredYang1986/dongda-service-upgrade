@@ -1,7 +1,10 @@
 package model.user
 
+import akka.stream.Attributes
 import com.mongodb.casbah.Imports._
 import io.circe.generic.JsonCodec
+import model.steps.commonresult
+import org.zalando.jsonapi.JsonapiReourceObjectWriter
 import org.zalando.jsonapi.model.RootObject.ResourceObjects
 //import io.circe.generic.auto._
 //import io.circe.syntax._
@@ -15,18 +18,14 @@ import org.bson.types.ObjectId
 @JsonCodec case class user(id : String,
                            name: String,
                            photo : String,
-                           auth : List[String])
+                           auth : List[String]) extends commonresult
 
 trait userJsonApiOpt {
-    implicit val userJsonapiRootObjectWriter: JsonapiRootObjectWriter[user] = new JsonapiRootObjectWriter[user] {
+    implicit val userJsonapiRootObjectWriter: JsonapiReourceObjectWriter[user] = new JsonapiReourceObjectWriter[user] {
         override def toJsonapi(person: user) = {
-            RootObject(data = Some(ResourceObject(
-                `type` = "user",
-                id = Some(person.id.toString),
-                attributes = Some(List(
-                    Attribute("name", StringValue(person.name)),
-                    Attribute("photo", StringValue(person.photo))
-                )), links = Some(List(Links.Self("http://test.link/person/42", None))))))
+            Attribute("name", StringValue(person.name)) ::
+            Attribute("photo", StringValue(person.photo)) ::
+            Nil
         }
     }
 

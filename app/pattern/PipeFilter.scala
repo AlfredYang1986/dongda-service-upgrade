@@ -16,6 +16,7 @@ object PipeFilter {
 class PipeFilter (originSender : ActorRef, sequence : SequenceSteps) extends Actor with ActorLogging {
 
     def dispatchImpl(cmd : commonstep) = {
+        println(cmd)
         tmp = Some(true)
         cmd.processes(rst) match {
             case (_, Some(err)) => {
@@ -24,6 +25,7 @@ class PipeFilter (originSender : ActorRef, sequence : SequenceSteps) extends Act
             }
             case (Some(r), _) => {
                 rst = Some(r)
+                println(rst)
                 rstReturn
                 cancelActor
             }
@@ -56,7 +58,7 @@ class PipeFilter (originSender : ActorRef, sequence : SequenceSteps) extends Act
                 sequence.steps match {
                     case Nil => {
 //                        originSender ! result(toJson(r))
-                        originSender ! sequence.cr
+                        originSender ! r
                     }
                     case head :: tail => {
                         head match {

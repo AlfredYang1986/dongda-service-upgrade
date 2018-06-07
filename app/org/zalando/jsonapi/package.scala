@@ -1,6 +1,6 @@
 package org.zalando
 
-import org.zalando.jsonapi.model.{Included, Relationship, Relationships, RootObject}
+import org.zalando.jsonapi.model._
 import org.zalando.jsonapi.model.RootObject.{ResourceObject, ResourceObjects}
 
 package object jsonapi {
@@ -14,7 +14,8 @@ package object jsonapi {
     }
 
     trait JsonapiReourceObjectWriter[A] {
-        def toJsonapi(a : A) : ResourceObject
+//        def toJsonapi(a : A) : ResourceObject
+        def toJsonapi(a : A) : Attributes
     }
 
     trait JsonapiResourceObjectReader[A] {

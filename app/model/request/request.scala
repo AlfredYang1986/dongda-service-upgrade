@@ -2,6 +2,7 @@ package model.request
 
 import io.circe.generic.JsonCodec
 import model.auth.auth_email
+import model.steps.commonresult
 import org.zalando.jsonapi.{JsonapiRootObjectReader, JsonapiRootObjectWriter}
 import org.zalando.jsonapi.model.JsonApiObject.{NumberValue, StringValue}
 import org.zalando.jsonapi.model.{Attribute, Links, RootObject}
@@ -12,7 +13,7 @@ import org.bson.types.ObjectId
 case class request (id : Int,
                     major : Int,
                     minor : Int,
-                    auth : Option[auth_email])
+                    auth : Option[auth_email]) extends commonresult
 
 trait requestJsonApiOpt {
     implicit val requestJsonapiRootObjectWriter: JsonapiRootObjectWriter[request] = new JsonapiRootObjectWriter[request] {

@@ -1,5 +1,9 @@
 package model.steps
 
-abstract class commonstep (val module : String = "", val methed : String = "", val args : String = "") {
+trait commonstep {
+    val module : String
+    val methed : String
+    val args : commonresult
+
     def processes(pr : Option[commonresult]) : (Option[commonresult], Option[commonerror])
 }

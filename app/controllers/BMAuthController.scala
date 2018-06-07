@@ -7,16 +7,21 @@ import org.zalando.jsonapi.model.RootObject
 import play.api.libs.circe._
 import play.api.mvc._
 import play.api._
-
 import io.circe._
 import io.circe.generic.auto._
 import io.circe.parser._
 import io.circe.syntax._
+import model.user.userdetailresult
+import pattern.entry.PlayEntry
+import pattern.manager.SequenceSteps
+import services.AuthService.testStep
 
 @Singleton
 class BMAuthController @Inject()
-        (cc: ControllerComponents, actorSystem: ActorSystem)
+        (implicit val cc: ControllerComponents, implicit val actorSystem: ActorSystem)
             extends AbstractController(cc) with Circe with CirceJsonapiSupport {
+
+    val entry = PlayEntry()
 
     def parseJson(jsonString: String) : Json = io.circe.parser.parse(jsonString).right.get
     def decodeJson[T](json: Json)(implicit d: io.circe.Decoder[T]) : T = json.as[T].right.get
@@ -24,8 +29,10 @@ class BMAuthController @Inject()
     def login = Action(circe.json[RootObject]) { implicit request =>
         import model.request.requestsJsonApiOpt.requestsJsonapiRootObjectReader._
         val tt = fromJsonapi(request.body)
-        println(tt)
-        println(tt.asJson)
-        Ok(tt.asJson)
+        val reVal = entry.commonExcution(
+                SequenceSteps(testStep(tt.reqs.head) :: Nil, None))
+
+        val result = model.user.userdetailJsonApiOpt.userJsonapiRootObjectWriter.toJsonapi(reVal.asInstanceOf[userdetailresult])
+        Ok(result.asJson)
     }
 }
