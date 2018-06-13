@@ -31,7 +31,8 @@ package object jsonapi {
     }
 
     trait JsonapiRootObjectFormat[A] extends JsonapiRootObjectWriter[A] with JsonapiRootObjectReader[A]
-
+    trait JsonapiResourceObjectFormat[A] extends JsonapiReourceObjectWriter[A] with JsonapiResourceObjectReader[A]
+    trait JsonapiRelationshipObjectFormat[A] extends JsonapiRelationshipObjectWriter[A] with JsonapiRelationshipObjectReader[A]
 
     implicit class ToJsonapiRootObjectWriterOps[A](a: A) {
         def rootObject(implicit writer: JsonapiRootObjectWriter[A]): RootObject = {

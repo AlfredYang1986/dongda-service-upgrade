@@ -32,7 +32,7 @@ class BMAuthController @Inject()
         val reVal = entry.commonExcution(
                 SequenceSteps(testStep(tt.reqs.head) :: Nil, None))
 
-        val result = model.user.userdetailJsonApiOpt.userJsonapiRootObjectWriter.toJsonapi(reVal.asInstanceOf[userdetailresult])
+        val result = reVal.asInstanceOf[userdetailresult].toJsonapi(reVal.asInstanceOf[userdetailresult])
         Ok(result.asJson)
     }
 }
