@@ -2,10 +2,10 @@ package model.auth
 
 import io.circe.generic.JsonCodec
 import org.bson.types.ObjectId
-import org.zalando.jsonapi.{JsonapiRelationshipObjectReader, JsonapiResourceObjectReader}
-import org.zalando.jsonapi.model.JsonApiObject.StringValue
-import org.zalando.jsonapi.model.RootObject.{ResourceObject, ResourceObjects}
-import org.zalando.jsonapi.model.{Included, Relationship, Relationships, RootObject}
+import com.pharbers.jsonapi.{JsonapiRelationshipObjectReader, JsonapiResourceObjectReader}
+import com.pharbers.jsonapi.model.JsonApiObject.StringValue
+import com.pharbers.jsonapi.model.RootObject.{ResourceObject, ResourceObjects}
+import com.pharbers.jsonapi.model.{Included, Relationship, Relationships, RootObject}
 
 @JsonCodec case class auth_email(id : String,
                                  email : String,

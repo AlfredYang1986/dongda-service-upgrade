@@ -22,12 +22,17 @@ lazy val root = (project in file(".")).
 routesGenerator := InjectedRoutesGenerator
 
 resolvers += Resolver.sonatypeRepo("releases")
-addCompilerPlugin("org.scalamacros" % "paradise" % paradiseVersion cross CrossVersion.full)
 resolvers += Resolver.sonatypeRepo("snapshots")
+addCompilerPlugin("org.scalamacros" % "paradise" % paradiseVersion cross CrossVersion.full)
 resolvers += Resolver.mavenLocal
 
 libraryDependencies ++= Seq(
 	guice,
+
+	"org.scala-lang" % "scala-reflect" % "2.11.8",
+	"org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.4",
+	"org.typelevel" %% "macro-compat" % "1.1.1",
+	"org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided",
 
     "org.mongodb" % "casbah_2.11" % "3.1.1",
 	"io.circe" %% "circe-core" % "0.9.3",
@@ -36,6 +41,8 @@ libraryDependencies ++= Seq(
 	"com.dripower" % "play-circe_2.11" % "2609.1",
 	"io.spray" % "spray-httpx_2.11" % "1.3.3",
 	"org.mongodb" % "casbah_2.11" % "3.1.1",
+
+	"com.pharbers" % "pattern" % "1.0",
 
     // "com.pharbers" % "pharbers-module" % "0.1",
     // "com.pharbers" % "pharbers-errorcode" % "0.1",

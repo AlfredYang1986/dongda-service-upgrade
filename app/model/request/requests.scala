@@ -1,9 +1,9 @@
 package model.request
 
-import org.zalando.jsonapi.{JsonapiRootObjectReader, JsonapiRootObjectWriter}
-import org.zalando.jsonapi.model.JsonApiObject.NumberValue
-import org.zalando.jsonapi.model.{Attribute, Links, RootObject}
-import org.zalando.jsonapi.model.RootObject.{ResourceObject, ResourceObjects}
+import com.pharbers.jsonapi.{JsonapiRootObjectReader, JsonapiRootObjectWriter}
+import com.pharbers.jsonapi.model.JsonApiObject.NumberValue
+import com.pharbers.jsonapi.model.{Attribute, Links, RootObject}
+import com.pharbers.jsonapi.model.RootObject.{ResourceObject, ResourceObjects}
 
 case class requests (reqs : List[request])
 

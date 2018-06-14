@@ -2,8 +2,8 @@ package controllers
 
 import akka.actor.ActorSystem
 import javax.inject.{Inject, Singleton}
-import org.zalando.jsonapi.json.circe.CirceJsonapiSupport
-import org.zalando.jsonapi.model.RootObject
+import com.pharbers.jsonapi.json.circe.CirceJsonapiSupport
+import com.pharbers.jsonapi.model.RootObject
 import play.api.libs.circe._
 import play.api.mvc._
 import play.api._
