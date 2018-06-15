@@ -15,6 +15,8 @@ case class testStep(override val args : commonresult) extends commonstep {
     override val methed: String = "test"
 
     override def processes(pr: Option[commonresult]): (Option[commonresult], Option[commonerror]) = {
-        (Some(userdetailresult("12345", 1, 1, Some(user("1234", "alfred", "13720200856", Nil)))), None)
+//        (Some(userdetailresult("12345", 1, 1, Some(user("1234", "alfred yang", "13720200856", Nil)))), None)
+//        (Some(userdetailresult("12345", 1, 1, Some(user("1234", "alfred yang", "13720200856", "1123", Nil)))), None)
+        (Some(userdetailresult("12345", 1, 1, Some(user("1234", "alfred yang", "13720200856", "atest", 1123, Nil)))), None)
     }
 }

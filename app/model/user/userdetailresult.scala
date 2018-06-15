@@ -20,6 +20,10 @@ case class userdetailresult (id : String,
 trait userdetailJsonApiOpt extends JsonapiRootObjectFormat[userdetailresult] {
 
     override def toJsonapi(udr : userdetailresult) = {
+        val tmp = new commonresult {}
+//        val ttt = tmp.asJsonApi(udr.user.get)
+        val ttt = userJsonApiOpt.toJsonapi(udr.user.get)
+        println(s"ttt is $ttt")
         RootObject(data = Some(ResourceObject(
             `type` = "userdetailresult",
             id = Some(udr.id.toString),
@@ -43,7 +47,9 @@ trait userdetailJsonApiOpt extends JsonapiRootObjectFormat[userdetailresult] {
         tmp.map { iter =>
             println(iter.`type`)
         }
-        userdetailresult("123", 1, 1, Some(user(ObjectId.get.toString, "alfred yang", "photo", Nil)))
+//        userdetailresult("123", 1, 1, Some(user(ObjectId.get.toString, "alfred yang", "photo", 1234, Nil)))
+//        userdetailresult("123", 1, 1, Some(user(ObjectId.get.toString, "alfred yang", "photo", "1234", Nil)))
+        null
     }
 }
 
