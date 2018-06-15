@@ -2,13 +2,12 @@ package model.request
 
 import io.circe.generic.JsonCodec
 import model.auth.auth_email
-import model.steps.commonresult
+//import model.steps.commonresult
+import com.pharbers.model.detail.commonresult
 import com.pharbers.jsonapi.{JsonapiRootObjectReader, JsonapiRootObjectWriter}
 import com.pharbers.jsonapi.model.JsonApiObject.{NumberValue, StringValue}
 import com.pharbers.jsonapi.model.{Attribute, Attributes, Links, RootObject}
 import com.pharbers.jsonapi.model.RootObject.{ResourceObject, ResourceObjects}
-import com.pharbers.macros.common.expending.Expandable
-import org.bson.types.ObjectId
 
 @JsonCodec
 case class request (id : Int,

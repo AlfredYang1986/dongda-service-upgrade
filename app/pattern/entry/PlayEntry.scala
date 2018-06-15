@@ -11,7 +11,7 @@ import play.api.libs.json.JsValue
 import scala.concurrent.duration._
 import akka.actor.{ActorSystem, Props}
 import model.common.excute
-import model.steps.commonresult
+import com.pharbers.model.detail.commonresult
 import pattern.Gateway
 import pattern.manager.SequenceSteps
 import play.api.libs.Files.TemporaryFile

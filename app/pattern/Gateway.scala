@@ -2,7 +2,8 @@ package pattern
 
 import akka.actor.{Actor, ActorLogging, ActorRef, Terminated}
 import model.common.{excute, timeout}
-import model.steps.{commonerror, commonresult, commonstep}
+import com.pharbers.model.detail.commonresult
+import model.steps.{commonerror, commonstep}
 import pattern.manager.SequenceSteps
 import play.api.libs.json.Json.toJson
 

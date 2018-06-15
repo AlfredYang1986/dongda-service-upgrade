@@ -1,9 +1,9 @@
 package services.AuthService
 
 import javax.inject.Singleton
-import model.steps.{commonerror, commonresult, commonstep}
+import model.steps.{commonerror, commonstep}
 import model.user.userdetailresult
-import com.pharbers.model.detail.{company, user}
+import com.pharbers.model.detail.{commonresult, company, user}
 import services.Service
 
 trait AuthService extends Service[user]

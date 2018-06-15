@@ -1,13 +1,13 @@
 package model.user
 
 import io.circe.generic.JsonCodec
-import com.pharbers.macros.common.expending.{Expandable, TestAnnotation}
-import model.steps.commonresult
-import org.bson.types.ObjectId
+import com.pharbers.model.detail.commonresult
+import com.pharbers.model._
 import com.pharbers.jsonapi.model.JsonApiObject.{JsObjectValue, NumberValue}
 import com.pharbers.jsonapi.JsonapiRootObjectFormat
 import com.pharbers.jsonapi.model.RootObject.{ResourceObject, ResourceObjects}
 import com.pharbers.jsonapi.model.{Attribute, Links, RootObject}
+import com.pharbers.macros.common.expending.Expandable
 import com.pharbers.macros.common.expending.Expandable._
 import com.pharbers.model.detail.user
 import com.pharbers.model.detail.company
@@ -23,15 +23,16 @@ case class userdetailresult (id : String,
 trait userdetailJsonApiOpt extends JsonapiRootObjectFormat[userdetailresult] {
 
     override def toJsonapi(udr : userdetailresult) = {
-        val tmp = new commonresult {}
+        val tt = Expandable.materializeExpandable[com.pharbers.model.detail.user]
+        val uu = tt.toJsonapi(udr.user.get)
         RootObject(data = Some(ResourceObject(
             `type` = "userdetailresult",
             id = Some(udr.id.toString),
             attributes = Some(List(
                 Attribute("major", NumberValue(udr.major)),
                 Attribute("minor", NumberValue(udr.minor)),
-                Attribute("user", JsObjectValue(tmp.asJsonApi(udr.user.get))),
-                Attribute("company", JsObjectValue(tmp.asJsonApi(udr.company.get)))
+                Attribute("user", JsObjectValue(asJsonApi(udr.user.get))),
+                Attribute("company", JsObjectValue(asJsonApi(udr.company.get)))
             )), links = Some(List(Links.Self("http://test.link/person/42", None))))))
     }
 
