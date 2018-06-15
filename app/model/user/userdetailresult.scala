@@ -9,28 +9,29 @@ import com.pharbers.jsonapi.JsonapiRootObjectFormat
 import com.pharbers.jsonapi.model.RootObject.{ResourceObject, ResourceObjects}
 import com.pharbers.jsonapi.model.{Attribute, Links, RootObject}
 import com.pharbers.macros.common.expending.Expandable._
+import com.pharbers.model.detail.user
+import com.pharbers.model.detail.company
 
 @JsonCodec
 case class userdetailresult (id : String,
                              major : Int,
                              minor : Int,
-                             user : Option[user]) extends commonresult with userdetailJsonApiOpt
+                             user : Option[user],
+                             company : Option[company]) extends commonresult with userdetailJsonApiOpt
 
 //@TestAnnotation
 trait userdetailJsonApiOpt extends JsonapiRootObjectFormat[userdetailresult] {
 
     override def toJsonapi(udr : userdetailresult) = {
         val tmp = new commonresult {}
-//        val ttt = tmp.asJsonApi(udr.user.get)
-        val ttt = userJsonApiOpt.toJsonapi(udr.user.get)
-        println(s"ttt is $ttt")
         RootObject(data = Some(ResourceObject(
             `type` = "userdetailresult",
             id = Some(udr.id.toString),
             attributes = Some(List(
                 Attribute("major", NumberValue(udr.major)),
                 Attribute("minor", NumberValue(udr.minor)),
-                Attribute("user", JsObjectValue(udr.user.get.asJsonApi(udr.user.get)))
+                Attribute("user", JsObjectValue(tmp.asJsonApi(udr.user.get))),
+                Attribute("company", JsObjectValue(tmp.asJsonApi(udr.company.get)))
             )), links = Some(List(Links.Self("http://test.link/person/42", None))))))
     }
 
