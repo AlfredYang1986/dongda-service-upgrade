@@ -38,9 +38,9 @@ class BMAuthController @Inject()
         val reVal = entry.commonExcution(
                 SequenceSteps(testStep(tt.reqs.head) :: Nil, None))
 
-//        val ctest = company("12", "alfred")
-//        val ctestj = asJsonApi(ctest)
-//        println(ctestj)
+        val ctest = company("12", "alfred")
+        val ctestj = asJsonApi(ctest)
+        println(ctestj)
 
 //        val udtest = userdetailresult("123", 1, 1)
 //        val udtestj = asJsonApiResult(udtest)
