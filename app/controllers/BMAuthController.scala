@@ -4,23 +4,20 @@ import akka.actor.ActorSystem
 import javax.inject.{Inject, Singleton}
 import com.pharbers.jsonapi.json.circe.CirceJsonapiSupport
 import com.pharbers.jsonapi.model.RootObject
+import com.pharbers.macros.common.expending.Expandable
 import com.pharbers.model.detail.{company, user}
 import play.api.libs.circe._
 import play.api.mvc._
-import play.api._
 import io.circe._
-import io.circe.generic.auto._
-import io.circe.parser._
 import io.circe.syntax._
 import pattern.entry.PlayEntry
 import pattern.manager.SequenceSteps
 import services.AuthService.testStep
 import com.pharbers.model._
-import com.pharbers.macros.common.resulting.Resultable
 import com.pharbers.macros.common.resulting.Resultable._
-import com.pharbers.macros.common.expending.Expandable
 import com.pharbers.macros.common.expending.Expandable._
 import com.pharbers.model.detail.userdetailresult
+import model.test.userdetailJsonApiOpt
 
 @Singleton
 class BMAuthController @Inject()
@@ -38,15 +35,17 @@ class BMAuthController @Inject()
         val reVal = entry.commonExcution(
                 SequenceSteps(testStep(tt.reqs.head) :: Nil, None))
 
+
         val ctest = company("12", "alfred")
         val ctestj = asJsonApi(ctest)
         println(ctestj)
 
-//        val udtest = userdetailresult("123", 1, 1)
-//        val udtestj = asJsonApiResult(udtest)
-//        println(udtestj)
+        val udtest = reVal.asInstanceOf[userdetailresult]
+        val udtestj = userdetailJsonApiOpt.toJsonapi(udtest)
+        println(udtestj)
 
-        val result = asJsonApiResult(reVal.asInstanceOf[userdetailresult])
-        Ok(result.asJson)
+//        val result = asJsonApiResult(reVal.asInstanceOf[userdetailresult])
+//        Ok(result.asJson)
+        Ok(udtestj.asJson)
     }
 }
