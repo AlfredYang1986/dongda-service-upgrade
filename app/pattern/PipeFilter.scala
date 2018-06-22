@@ -5,7 +5,8 @@ import akka.actor.ActorLogging
 import akka.actor.ActorRef
 import akka.actor.Props
 import akka.actor.Actor
-import model.steps.{commonresult, commonstep}
+import com.pharbers.model.detail.commonresult
+import model.steps.{commonstep}
 import model.common.timeout
 import pattern.manager.SequenceSteps
 

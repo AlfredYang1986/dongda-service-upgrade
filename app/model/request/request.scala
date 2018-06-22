@@ -2,12 +2,12 @@ package model.request
 
 import io.circe.generic.JsonCodec
 import model.auth.auth_email
-import model.steps.commonresult
-import org.zalando.jsonapi.{JsonapiRootObjectReader, JsonapiRootObjectWriter}
-import org.zalando.jsonapi.model.JsonApiObject.{NumberValue, StringValue}
-import org.zalando.jsonapi.model.{Attribute, Links, RootObject}
-import org.zalando.jsonapi.model.RootObject.{ResourceObject, ResourceObjects}
-import org.bson.types.ObjectId
+//import model.steps.commonresult
+import com.pharbers.model.detail.commonresult
+import com.pharbers.jsonapi.{JsonapiRootObjectReader, JsonapiRootObjectWriter}
+import com.pharbers.jsonapi.model.JsonApiObject.{NumberValue, StringValue}
+import com.pharbers.jsonapi.model.{Attribute, Attributes, Links, RootObject}
+import com.pharbers.jsonapi.model.RootObject.{ResourceObject, ResourceObjects}
 
 @JsonCodec
 case class request (id : Int,
