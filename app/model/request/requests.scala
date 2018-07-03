@@ -1,47 +1,13 @@
 package model.request
 
-import com.pharbers.jsonapi.{JsonapiRootObjectReader, JsonapiRootObjectWriter}
-import com.pharbers.jsonapi.model.JsonApiObject.NumberValue
-import com.pharbers.jsonapi.model.{Attribute, Links, RootObject}
-import com.pharbers.jsonapi.model.RootObject.{ResourceObject, ResourceObjects}
+import io.circe.generic.JsonCodec
+import com.pharbers.model.detail.commonresult
 
-case class requests (reqs : List[request])
+@JsonCodec
+case class request[T] (id : Int,
+                    major : Int,
+                    minor : Int,
+                    data : Option[T]) extends commonresult
 
-trait requestsJsonApiOpt {
-    implicit val requestsJsonapiRootObjectWriter: JsonapiRootObjectWriter[requests] = new JsonapiRootObjectWriter[requests] {
-        override def toJsonapi(req : requests) = {
-//            RootObject(data = Some(ResourceObject(
-//                `type` = "request",
-//                id = Some(req.id.toString),
-//                attributes = Some(List(
-//                    Attribute("major", NumberValue(req.major)),
-//                    Attribute("minor", NumberValue(req.minor))
-//                )), links = Some(List(Links.Self("http://test.link/person/42", None))))))
-            null
-        }
-    }
+case class requests[T](reqs: List[request[T]])
 
-    implicit val requestsJsonapiRootObjectReader : JsonapiRootObjectReader[requests] = new JsonapiRootObjectReader[requests] {
-        override def fromJsonapi(rootObject: RootObject) : requests = {
-            requests(
-                rootObject.data.
-                    map(_.asInstanceOf[ResourceObject] :: Nil).
-                    getOrElse(rootObject.data.
-                    map(_.asInstanceOf[ResourceObjects].array.toList).
-                    getOrElse(throw new Exception("error"))).
-                map { iter =>
-                    val (major, minor) = iter.attributes.map { attr =>
-                        (attr.find("major" == _.name).map (_.value.asInstanceOf[NumberValue].value.toInt).getOrElse(0),
-                            attr.find("minor" == _.name).map (_.value.asInstanceOf[NumberValue].value.toInt).getOrElse(0))
-                    }.getOrElse(1, 1)
-
-                    import model.auth.authEmailJsonApiOpt.authEmailJsonapiRelationReader
-                    request(iter.id.get.toInt, major, minor,
-                        Some(authEmailJsonapiRelationReader.fromJsonapi(iter.relationships.get, rootObject.included.get)))
-                }
-            )
-        }
-    }
-}
-
-object requestsJsonApiOpt extends requestsJsonApiOpt

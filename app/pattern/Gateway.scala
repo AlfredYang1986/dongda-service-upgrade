@@ -1,55 +1,51 @@
 package pattern
 
-import akka.actor.{Actor, ActorLogging, ActorRef, Terminated}
-import model.common.{excute, timeout}
-import com.pharbers.model.detail.commonresult
-import model.steps.{commonerror, commonstep}
 import pattern.manager.SequenceSteps
+import model.common.{excute, timeout}
 import play.api.libs.json.Json.toJson
+import model.steps.{commonerror, commonstep}
+import com.pharbers.model.detail.commonresult
+import akka.actor.{Actor, ActorLogging, ActorRef, Terminated}
 
 class Gateway extends Actor with ActorLogging {
 
-    var originSender : ActorRef = null
-    var next : ActorRef = null
+    var originSender : ActorRef = _
+    var next : ActorRef = _
 
-    def receive = {
-        case excute(sequence) => {
+    def receive: PartialFunction[Any, Unit] = {
+        case excute(sequence) =>
             originSender = sender
             sequence.steps match {
                 case Nil => originSender ! new commonerror(0, "error")
-                case head :: tail => {
+                case head :: tail =>
                     head match {
 //                        case p : ParallelMessage => {
 //                            next = context.actorOf(ScatterGatherActor.prop(self, MessageRoutes(tail, msr.rst)), "gate")
 //                            next ! head
 //                        }
-                        case c : commonstep => {
+                        case _ : commonstep =>
                             next = context.actorOf(PipeFilter.prop(self, SequenceSteps(tail, sequence.cr)), "gate")
                             next ! head
-                        }
                     }
 
                     context.watch(next)
-                }
             }
-        }
-        case rst : commonresult => {
+        case rst : commonresult =>
             originSender ! rst
-            cancelActor
-        }
-        case err : commonerror => {
+            TestLog.print(s"rst = $rst")
+            cancelActor()
+        case err : commonerror =>
             originSender ! err
-            cancelActor
-        }
-        case timeout() => {
+            TestLog.print(s"err = $err")
+            cancelActor()
+        case timeout() =>
             originSender ! toJson("timeout")
-            cancelActor
-        }
+            cancelActor()
         case Terminated(actorRef) => println("Actor {} terminated", actorRef)
         case _ => Unit
     }
 
-    def cancelActor = {
+    def cancelActor(): Unit = {
         context.stop(self)
     }
 }

@@ -1,14 +1,10 @@
 package services.AuthService
 
-import javax.inject.Singleton
+import services.Service
 import model.steps.{commonerror, commonstep}
 import com.pharbers.model.detail.{commonresult, company, user, userdetailresult}
-import services.Service
 
 trait AuthService extends Service[user]
-
-//@Singleton
-//class AuthServiceImpl extends AuthService with commonstep {
 
 case class testStep(override val args : commonresult) extends commonstep {
     override val module: String = "test"

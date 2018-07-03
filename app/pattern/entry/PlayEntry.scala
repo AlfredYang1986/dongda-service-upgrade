@@ -3,25 +3,25 @@ package pattern.entry
 import play.api.mvc._
 import akka.pattern.ask
 import akka.util.Timeout
-import javax.inject.Inject
 
+import pattern.Gateway
+import model.common.excute
 import scala.concurrent.Await
+import scala.language.postfixOps
 import play.api.libs.json.JsValue
-
 import scala.concurrent.duration._
 import akka.actor.{ActorSystem, Props}
-import model.common.excute
-import com.pharbers.model.detail.commonresult
-import pattern.Gateway
 import pattern.manager.SequenceSteps
 import play.api.libs.Files.TemporaryFile
+
+import com.pharbers.model.detail.commonresult
 
 object PlayEntry {
     def apply()(implicit akkasys : ActorSystem, cc : ControllerComponents) = new PlayEntry()
 }
 
-class PlayEntry @Inject() (implicit akkasys : ActorSystem, cc : ControllerComponents) extends AbstractController(cc) {
-    implicit val t = Timeout(5 second)
+class PlayEntry (implicit akkasys : ActorSystem, cc : ControllerComponents) extends AbstractController(cc) {
+    implicit val t: Timeout = Timeout(5 second)
 
     def commonExcution(msr : SequenceSteps) : commonresult = {
         val act = akkasys.actorOf(Props[Gateway])
