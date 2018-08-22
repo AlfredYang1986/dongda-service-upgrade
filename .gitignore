@@ -9,3 +9,5 @@ target
 /.settings
 /RUNNING_PID
 app/model/test/
+
+.DS_Store

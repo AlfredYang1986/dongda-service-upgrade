@@ -30,10 +30,11 @@ trait requestsJsonApiOpt {
                     map(_.asInstanceOf[ResourceObjects].array.toList).
                     getOrElse(throw new Exception("error"))).
                 map { iter =>
-                    val (major, minor) = iter.attributes.map { attr =>
-                        (attr.find("major" == _.name).map (_.value.asInstanceOf[NumberValue].value.toInt).getOrElse(0),
-                            attr.find("minor" == _.name).map (_.value.asInstanceOf[NumberValue].value.toInt).getOrElse(0))
-                    }.getOrElse(1, 1)
+                        val (major, minor) = (1, 1)
+//                    val (major, minor) = iter.attributes.map { attr =>
+//                        (attr.find("major" == _.name).map (_.value.asInstanceOf[NumberValue].value.toInt).getOrElse(0),
+//                            attr.find("minor" == _.name).map (_.value.asInstanceOf[NumberValue].value.toInt).getOrElse(0))
+//                    }.getOrElse(1, 1)
 
                     import model.auth.authEmailJsonApiOpt.authEmailJsonapiRelationReader
                     request(iter.id.get.toInt, major, minor,
