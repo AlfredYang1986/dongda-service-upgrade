@@ -1,15 +1,12 @@
-//package services.AuthService
+//package services
 //
 //import com.pharbers.pattern.entity.commonResult
-//import services.Service
-//import com.pharbers.pattern.steps.{commonError, commonStep}
+//import com.pharbers.pattern.steps.commonStep
 //
-//trait AuthService extends Service[model.user]
+//class testStep(override val args : commonResult) extends commonStep {
 //
-////@Singleton
-////class AuthServiceImpl extends AuthService with commonstep {
-//
-//case class testStep(override val args : commonResult) extends commonStep {
+//}
+//case class testStep() extends commonStep {
 //    override val module: String = "test"
 //    override val methed: String = "test"
 //

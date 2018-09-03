@@ -3,7 +3,11 @@
 # ~~~~
 
 # An example controller showing a sample home page
+POST    /api/v1/test/:step          controllers.BMAuthController.step(step: Long)
+POST    /test                       controllers.BMAuthController.test
 POST    /login                      controllers.BMAuthController.login
+POST    /api/proposal/lst           controllers.BMAuthController.proposalLst
+POST    /api/layout/lst             controllers.BMAuthController.layoutLst
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(file)

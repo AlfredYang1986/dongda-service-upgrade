@@ -12,6 +12,7 @@ def common = Seq(
 
 lazy val root = (project in file(".")).
         enablePlugins(PlayScala).
+        disablePlugins(PlayFilters).
         settings(common: _*).
         settings(
             name := "dongda-service",
@@ -44,6 +45,7 @@ libraryDependencies ++= Seq(
 	"com.pharbers" % "jsonapi" % "1.0",
 	"com.pharbers" % "macros" % "1.0",
 	"com.pharbers" % "pattern" % "1.0",
+	"com.pharbers" % "pharbers-third" % "0.1",
 
     "log4j" % "log4j" % "1.2.17",
     "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test,
